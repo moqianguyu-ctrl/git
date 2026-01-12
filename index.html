@@ -1,2 +1,204 @@
-<H1>DLINGL221</H1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>我的导航网页 - 响应式示例</title>
+  <style>
+    /* 重置默认样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    /* 导航栏主体 */
+    .navbar {
+      background-color: #2c3e50; /* 深蓝背景，可改成你喜欢的颜色 */
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Logo / 品牌 */
+    .logo {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .logo:hover {
+      color: #3498db;
+    }
+
+    /* 导航链接列表 */
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 2.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #3498db;
+    }
+
+    /* 下划线 hover 效果 */
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background-color: #3498db;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* 汉堡菜单按钮（手机端显示） */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    /* 手机端响应式 */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #2c3e50;
+        flex-direction: column;
+        align-items: center;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.4s ease;
+      }
+
+      .nav-links.active {
+        height: 300px; /* 根据你的菜单项数量调整 */
+        padding: 1.5rem 0;
+      }
+
+      .nav-links li {
+        margin: 1.2rem 0;
+      }
+
+      .nav-links a {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">我的网站</a>
+
+      <ul class="nav-links" id="navMenu">
+        <li><a href="#home" class="active">首页</a></li>
+        <li><a href="#about">关于</a></li>
+        <li><a href="#services">服务</a></li>
+        <li><a href="#blog">博客</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 这里放你的页面内容 -->
+  <main style="padding: 4rem 2rem; text-align: center;">
+    <h1>欢迎来到我的导航网页！</h1>
+    <p>这是一个简单的响应式导航示例，手机上会变成汉堡菜单。</p>
+    <p>试试缩小浏览器窗口查看效果～</p>
+  </main>
+
+  <script>
+    // 汉堡菜单点击切换
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+
+      // 可选：汉堡图标变 X
+      hamburger.classList.toggle('active');
+      if (hamburger.classList.contains('active')) {
+        hamburger.innerHTML = '<span style="transform: rotate(45deg) translate(5px,5px);"></span>' +
+                              '<span style="opacity:0;"></span>' +
+                              '<span style="transform: rotate(-45deg) translate(7px,-6px);"></span>';
+      } else {
+        hamburger.innerHTML = '<span></span><span></span><span></span>';
+      }
+    });
+
+    // 点击链接后自动关闭菜单（手机端）
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navMenu.classList.remove('active');
+          hamburger.classList.remove('active');
+          hamburger.innerHTML = '<span></span><span></span><span></span>';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
 
